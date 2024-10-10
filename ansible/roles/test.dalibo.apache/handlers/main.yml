@@ -1,2 +1,4 @@
----
-# handlers file for test.dalibo.apache
+- name: restart apache
+  ansible.builtin.systemd:
+    name: "{{ apache_service }}"
+    state: restarted

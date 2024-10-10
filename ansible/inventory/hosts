@@ -1,0 +1,11 @@
+[managed]
+debian ansible_host=192.168.122.60
+
+[webservers]
+debian ansible_host=192.168.122.60
+
+[dbservers]
+debian ansible_host=192.168.122.60
+
+[dalibo_explain]
+debian ansible_host=192.168.122.60

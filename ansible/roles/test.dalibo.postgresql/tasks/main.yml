@@ -1,0 +1,6 @@
+- name: Install postgresql
+  ansible.builtin.apt:
+    update_cache: true
+    name:
+      - postgresql
+    state: present

@@ -1,0 +1,6 @@
+- name: Install explain app and dependencies
+  hosts: dalibo_explain
+  roles:
+    - test.dalibo.apache
+    - test.dalibo.git
+    - test.dalibo.postgresql
