@@ -1,6 +1,0 @@
-- name : Install Git
-  ansible.builtin.apt:
-    update_cache: true
-    name:
-      - git
-    state: present

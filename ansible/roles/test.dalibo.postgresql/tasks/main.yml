@@ -8,3 +8,8 @@
   ansible.builtin.service:
     name: '{{ postgresql_service }}'
     enabled: true
+# Créer la base de données
+# Copier le fichier template postgresql.conf vers la cible
+# Copier le fichier template pg_hba.conf vers la cible
+# Redémarrer le service postgresql
+
