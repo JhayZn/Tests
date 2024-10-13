@@ -1,11 +1,12 @@
 [managed]
 debian ansible_host=192.168.122.60
+debian-bdd ansible_host=192.168.122.184
 
 [webservers]
 debian ansible_host=192.168.122.60
 
 [dbservers]
-debian ansible_host=192.168.122.60
+debian-bdd ansible_host=192.168.122.184
 
 [dalibo_explain]
 debian ansible_host=192.168.122.60

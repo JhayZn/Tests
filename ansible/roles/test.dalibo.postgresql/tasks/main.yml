@@ -4,3 +4,7 @@
     name:
       - postgresql
     state: present
+- name: Enable postgresql service
+  ansible.builtin.service:
+    name: '{{ postgresql_service }}'
+    enabled: true

@@ -1,6 +1,16 @@
 - name: Install explain app and dependencies
   hosts: dalibo_explain
   roles:
-    - test.dalibo.apache
     - test.dalibo.git
+- name: Install webserver as reverse-proxy
+  hosts: webservers
+  roles:
+    - test.dalibo.apache
+- name: Install database for explain app
+  hosts: dbservers
+  roles:
     - test.dalibo.postgresql
+- name: Install explain app
+  hosts: dalibo_explain
+  roles:
+    - test.dalibo.explain

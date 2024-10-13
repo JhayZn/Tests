@@ -1,2 +1,4 @@
----
-# handlers file for roles/test.dalibo.postgresql
+- name: restart postgresql
+  ansible.builtin.systemd:
+    name: "{{ postgresql_service }}"
+    state: restarted
