@@ -1,4 +1,12 @@
 - name: restart apache
   ansible.builtin.systemd:
-    name: "{{ apache_service }}"
+    name: '{{ apache_service }}'
     state: restarted
+- name: reload apache
+  ansible.builtin.systemd:
+    name: '{{ apache_service }}'
+    state: reloaded
+- name: enable site
+  ansible.builtin.command: a2ensite explain
+- name: syntax check
+  ansible.builtin.command: apache2ctl -t

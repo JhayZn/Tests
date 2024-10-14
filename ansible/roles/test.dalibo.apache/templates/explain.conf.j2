@@ -1,0 +1,19 @@
+<VirtualHost *:80>
+    DocumentRoot "/var/www/explain/explain.dalibo.com-2.10.0"
+    ServerName explain.dalibo.com
+    ServerAlias 192.168.122.60
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+</VirtualHost>
+
+<VirtualHost *:443>
+    DocumentRoot "/var/www/explain/explain.dalibo.com-2.10.0"
+    ServerName explain.dalibo.com
+    ServerAlias 192.168.122.60
+    SSLEngine on
+    SSLCertificateFile      /etc/ssl/certs/ssl-cert-snakeoil.pem
+    SSLCertificateKeyFile   /etc/ssl/private/ssl-cert-snakeoil.key
+    ProxyPass / https://127.0.0.1:5000
+    ProxyPassReverse / https://127.0.0.1:5000
+</VirtualHost>

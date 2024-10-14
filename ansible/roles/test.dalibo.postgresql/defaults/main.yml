@@ -1,1 +1,5 @@
 postgresql_service: postgresql
+postgresql_version: 15
+postgresql_database: explain
+postgresql_user: explain
+postgresql_pass: Ch4ngeM3

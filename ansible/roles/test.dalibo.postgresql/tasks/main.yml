@@ -1,15 +1,61 @@
-- name: Install postgresql
+- name: Install postgresql & dependancies
   ansible.builtin.apt:
     update_cache: true
     name:
       - postgresql
+      - sudo
+      - python3-psycopg2
     state: present
 - name: Enable postgresql service
   ansible.builtin.service:
     name: '{{ postgresql_service }}'
     enabled: true
-# Créer la base de données
-# Copier le fichier template postgresql.conf vers la cible
-# Copier le fichier template pg_hba.conf vers la cible
-# Redémarrer le service postgresql
+- name: Modify configuration file
+  ansible.builtin.template:
+    src: postgresql.conf.j2
+    dest: /etc/postgresql/{{ postgresql_version }}/main/postgresql.conf
+    mode: '0644'
+- name: Modify security access file
+  ansible.builtin.template:
+    src: pg_hba.conf.j2
+    dest: /etc/postgresql/{{ postgresql_version }}/main/pg_hba.conf
+    mode: '0640'
+  notify:
+   - restart postgresql
+- name: Create Database
+  community.postgresql.postgresql_db:
+    name: '{{ postgresql_database }}'
+    encoding: UTF-8
+- name: Create user
+  postgresql_user:
+    db: '{{ postgresql_database }}'
+    name: '{{ postgresql_user }}'
+    password: '{{ postgresql_pass }}'
+- name: Grant all privilèges to explain user
+  community.postgresql.postgresql_privs:
+    db: '{{  postgresql_database }}'
+    privs: ALL
+    type: database
+    obj: '{{ postgresql_database }}'
+    role: '{{ postgresql_user }}'
+- name: Change ownership to explain database
+  community.postgresql.postgresql_owner:
+    db: '{{ postgresql_database }}'
+    new_owner: '{{ postgresql_user }}'
+    obj_name: '{{ postgresql_database }}'
+    obj_type: database
 
+# Méthode Legacy testée mais qui pose PB au niveau de l'interprétation de la syntaxe du MDP lors de
+# la création de l'utilisateur
+#
+#  ansible.builtin.command: psql -c 'if not exists create database {{ postgresql_database }};' 
+#  become: yes
+#  become_user: postgres
+#- name: Create User
+#  ansible.builtin.command: psql -c 'create user {{ postgresql_user }} with encrypted password "{{ postgresql_pass }}";'
+#  become: yes
+#  become_user: postgres
+#- name: Grant user access to database
+#  ansible.builtin.command: psql -c 'grant all privileges on database {{ postgresql_database }} to {{ postgresql_user }};'
+#  become: yes
+#  become_user: postgres
