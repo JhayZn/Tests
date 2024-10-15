@@ -1,3 +1,3 @@
 dalibo_explain_release_url: https://github.com/dalibo/explain.dalibo.com/archive/refs/tags/v2.10.0.tar.gz
-# Checksum ? 
+dalibo_explain_checksum: sha512:4538a54c8eb27e78976b7059306e35f00bb3082e320c23128b87bb86794a068dcc1b30091becc542b2f94fed4a51e744b562eb91fd56f0dd097bbe5d94c74a07 
 dalibo_explain_app_path: /var/www/explain

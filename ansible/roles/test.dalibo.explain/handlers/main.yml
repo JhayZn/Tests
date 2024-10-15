@@ -1,2 +1,13 @@
----
-# handlers file for roles/test.dalibo.explain
+- name: extract archive
+  ansible.builtin.unarchive:
+    src: /var/tmp/explain.dalibo.com-2.10.0.tar.gz
+    dest: '{{ dalibo_explain_app_path }}'
+    remote_src: true
+    owner: www-data
+    group: www-data
+    mode: '0755'
+- name: configure app
+  ansible.builtin.template:
+    src: config.py.j2
+    dest: /var/www/explain/explain.dalibo.com-2.10.0/instance/config.py
+    mode: '0755'

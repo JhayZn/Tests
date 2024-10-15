@@ -5,18 +5,13 @@
     owner: www-data
     group: www-data
     mode: '0755'
-- name: Download and extract explain archive
-  ansible.builtin.unarchive:
-    src: '{{ dalibo_explain_release_url }}'
-    dest: '{{ dalibo_explain_app_path }}'
-    remote_src: true
-    owner: www-data
-    group: www-data
+- name: Download explain
+  ansible.builtin.get_url:
+    url: '{{ dalibo_explain_release_url }}'
+    dest: /var/tmp
     mode: '0755'
+    checksum: '{{ dalibo_explain_checksum }}'
+  notify:
+    - extract archive
+    - configure app
 # Initialiser l'app avec les commandes pip
-# Copier le fichier de config (config.py) du template vers la cible
-- name: Configure explain app
-  ansible.builtin.template:
-    src: config.py.j2
-    dest: /var/www/explain/explain.dalibo.com-2.10.0/config.py
-    mode: '0755'
